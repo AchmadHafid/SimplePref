@@ -1,0 +1,91 @@
+package io.github.achmadhafid.sample_app
+
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
+import io.github.achmadhafid.simplepref.SimplePref
+import io.github.achmadhafid.simplepref.core.simplePrefClear
+import io.github.achmadhafid.simplepref.core.simplePrefClearAllGlobal
+import io.github.achmadhafid.simplepref.core.simplePrefSave
+import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
+import io.github.achmadhafid.simplepref.simplePref
+import io.github.achmadhafid.zpack.ktx.bindView
+import io.github.achmadhafid.zpack.ktx.onSingleClick
+import io.github.achmadhafid.zpack.ktx.setMaterialToolbar
+import io.github.achmadhafid.zpack.ktx.startActivity
+import io.github.achmadhafid.zpack.ktx.startService
+import io.github.achmadhafid.zpack.ktx.stopService
+import kotlin.random.Random
+
+class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
+
+    //region Preference
+
+    private var myInt: Int? by simplePref()
+    private var myList by globalPrefMyList()
+    private var isServiceRunning by globalPrefIsServiceRunning()
+
+    //endregion
+    //region View Binding
+
+    private val tvLocalVar: TextView by bindView(R.id.tvLocalVar)
+    private val tvGlobalVar: TextView by bindView(R.id.tvGlobalVar)
+    private val btnAdd: MaterialButton by bindView(R.id.btnAdd)
+    private val btnClearLocal: MaterialButton by bindView(R.id.btnClearLocal)
+    private val btnClearGlobal: MaterialButton by bindView(R.id.btnClearGlobal)
+    private val btnToggleService: MaterialButton by bindView(R.id.btnToggleService)
+    private val btnOpenChild: MaterialButton by bindView(R.id.btnOpenChildActivity)
+    private val btnOpenFragmentActivity: MaterialButton by bindView(R.id.btnOpenFragmentActivity)
+
+    //endregion
+
+    //region Lifecycle Callback
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setMaterialToolbar(R.id.toolbar)
+
+        btnOpenChild.onSingleClick(true) { startActivity<ChildActivity>() }
+        btnOpenFragmentActivity.onSingleClick(true) { startActivity<ChildActivityWithFragment>() }
+
+        simplePrefLiveData(isServiceRunning, ::isServiceRunning) { updateUi() }
+        simplePrefLiveData(myInt, ::myInt) { updateUi() }
+        simplePrefLiveData(myList, ::myList) { updateUi() }
+
+        btnAdd.onSingleClick(true) {
+            @Suppress("MagicNumber")
+            myInt = Random.nextInt(1, 100)
+            myList.add("$myInt")
+            simplePrefSave(::myList)
+        }
+        btnClearLocal.onSingleClick(true) {
+            simplePrefClear(::myInt)
+        }
+        btnClearGlobal.onSingleClick(true) {
+            simplePrefClear(::myList)
+        }
+    }
+
+    override fun onDestroy() {
+        if (isServiceRunning) stopService<LiveDataObserverService>()
+        super.onDestroy()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateUi() {
+        btnToggleService.text =
+            if (isServiceRunning) "Stop Observer Service"
+            else "Start Observer Service"
+        btnToggleService.onSingleClick {
+            if (isServiceRunning) stopService<LiveDataObserverService>()
+            else startService<LiveDataObserverService>()
+        }
+        tvLocalVar.text  = "myInt (Local pref) : $myInt"
+        tvGlobalVar.text = "myList Size (Global pref): ${myList.size}"
+    }
+
+    //endregion
+
+}
