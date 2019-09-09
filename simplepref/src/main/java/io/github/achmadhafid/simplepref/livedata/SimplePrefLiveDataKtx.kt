@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package io.github.achmadhafid.simplepref.livedata
 
 import androidx.fragment.app.Fragment

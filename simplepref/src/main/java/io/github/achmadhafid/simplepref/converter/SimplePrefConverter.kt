@@ -4,7 +4,7 @@ import kotlin.reflect.KClass
 
 data class SimplePrefConverter<V : Any>(
     internal var clazz: KClass<V>,
-    internal var signature: Int = clazz.hashCode(),
+    internal var signature: Int = clazz.java.name.hashCode(),
     internal var serializer: ((V) -> String)? = null,
     internal var deserializer: ((String) -> V)? = null
 )
@@ -18,10 +18,6 @@ inline fun <reified V : Any> simplePrefAddConverter(
         SimplePrefConverter(V::class)
             .apply(builder)
     )
-}
-
-fun <V : Any> SimplePrefConverter<V>.setSignature(signature: Int) {
-    this.signature = signature
 }
 
 fun <V : Any> SimplePrefConverter<V>.onSerialize(block: (V) -> String) {
