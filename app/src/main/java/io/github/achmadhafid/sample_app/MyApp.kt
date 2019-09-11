@@ -10,18 +10,15 @@ import io.github.achmadhafid.simplepref.lifecycle.SimplePrefLifecycleOwnerImpl
 
 class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefLifecycleOwnerImpl() {
 
-    private var myList by globalPrefMyList()
-
     override fun onCreate() {
         super.onCreate()
-        attachSimplePrefContext(this)
         simplePrefAddConverter<MutableList<String>> {
             onSerialize {
                 TextUtils.join("::", it)
             }
             onDeserialize {
-                it.split("::")
-                    .toMutableList()
+                if (it.isEmpty()) mutableListOf()
+                else it.split("::").toMutableList()
             }
         }
     }
