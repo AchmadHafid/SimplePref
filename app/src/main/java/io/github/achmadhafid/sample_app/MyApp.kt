@@ -5,10 +5,8 @@ import android.text.TextUtils
 import io.github.achmadhafid.simplepref.converter.onDeserialize
 import io.github.achmadhafid.simplepref.converter.onSerialize
 import io.github.achmadhafid.simplepref.converter.simplePrefAddConverter
-import io.github.achmadhafid.simplepref.lifecycle.SimplePrefLifecycleOwner
-import io.github.achmadhafid.simplepref.lifecycle.SimplePrefLifecycleOwnerImpl
 
-class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefLifecycleOwnerImpl() {
+class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()

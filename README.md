@@ -66,8 +66,8 @@ Quick Usage
   <br />
 
 ```kotlin
-// NOTES: Below code is only required if you use preference on Application class
-// You can ignore code below, if you do not use preference inside you Application class (e.g. only in Activity, Fragment etc)
+// NOTES: Below codes is only required if you use preference inside Application class
+// You can ignore it, if you do not use preference inside your Application class (e.g. only in Activity, Fragment etc)
 
 // 1. Make class implement SimplePrefLifecycleOwner with its delegate like below
 class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefLifecycleOwnerImpl() {
@@ -143,14 +143,10 @@ In order to use a shared preference with non native data types (types other than
 you must do 2 things, provide converters before accessing any SimplePref API & call save API to persist the value.
 
 ```kotlin
-class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefLifecycleOwnerImpl() {
-
-    private var appTheme: Int? by simplePref("global_key_app_theme") // nullable global shared preference
+class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        attachSimplePrefContext(this)
 
         // Add converter for data type `MutableList<String>`
         simplePrefAddConverter<MutableList<String>> {
