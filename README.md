@@ -82,7 +82,7 @@ class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefApplication()
         // 4. Use it like normal var/val
         appTheme?.let { applyTheme(it) }
 
-        // 5.  Or create live data view extension function below
+        // 5.  Or create live data via extension function below
         simplePrefLiveData(appTheme, ::appTheme) {
             it?.let { applyTheme(it) }
         }
