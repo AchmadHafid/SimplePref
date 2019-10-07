@@ -2,12 +2,13 @@ package io.github.achmadhafid.sample_app
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClear
-import io.github.achmadhafid.simplepref.core.simplePrefClearAllGlobal
 import io.github.achmadhafid.simplepref.core.simplePrefSave
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
@@ -17,12 +18,14 @@ import io.github.achmadhafid.zpack.ktx.setMaterialToolbar
 import io.github.achmadhafid.zpack.ktx.startActivity
 import io.github.achmadhafid.zpack.ktx.startService
 import io.github.achmadhafid.zpack.ktx.stopService
+import io.github.achmadhafid.zpack.ktx.toggleTheme
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
 
     //region Preference
 
+    private var appTheme: Int? by simplePref("app_theme")
     private var myInt: Int? by simplePref()
     private var myList by globalPrefMyList()
     private var isServiceRunning by globalPrefIsServiceRunning()
@@ -68,9 +71,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_action_bar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onDestroy() {
         if (isServiceRunning) stopService<LiveDataObserverService>()
         super.onDestroy()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_toggle_theme -> {
+                appTheme = toggleTheme()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     @SuppressLint("SetTextI18n")

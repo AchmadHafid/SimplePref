@@ -4,17 +4,18 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClear
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.core.simplePrefSave
 import io.github.achmadhafid.simplepref.lifecycle.SimplePrefLifecycleOwner
-import io.github.achmadhafid.simplepref.lifecycle.SimplePrefLifecycleOwnerImpl
+import io.github.achmadhafid.simplepref.lifecycle.SimplePrefViewModel
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
 import kotlin.random.Random
 
-class ChildActivityViewModel(application: Application) : AndroidViewModel(application),
-    SimplePrefLifecycleOwner by SimplePrefLifecycleOwnerImpl(application) {
+class ChildActivityViewModel(application: Application) : AndroidViewModel(application), SimplePref,
+    SimplePrefLifecycleOwner by SimplePrefViewModel(application) {
 
     private var myInt: Int? by simplePref()
     private val myList by globalPrefMyList()

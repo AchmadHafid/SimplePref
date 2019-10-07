@@ -2,4 +2,5 @@
     <string name="app_name">SimplePref</string>
     <string name="title_activity_child">Child Activity</string>
     <string name="title_activity_child_with_fragment">Child Activity with Fragment</string>
+    <string name="menu_toggle_theme">Switch Theme</string>
 </resources>

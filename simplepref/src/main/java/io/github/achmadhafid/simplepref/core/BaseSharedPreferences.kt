@@ -15,7 +15,7 @@ private const val SHARED_PREFERENCES_NAME = "simple_pref"
 
 abstract class BaseSharedPreferences<T : Any, V: Any>(
     private val getSharedPreferences: (T, String, Boolean) -> SharedPreferences?,
-    private val getLifecycle: (T) -> Lifecycle,
+    private val getLifecycle: (T) -> Lifecycle?,
     private val clazz: KClass<V>,
     protected val globalKey: String? = null
 ) {
@@ -46,7 +46,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
         if (lifecycle == null) {
             val holderKey =
                 SimplePrefHolder.getKey(thisRef, property)
-            lifecycle = getLifecycle(thisRef).apply {
+            lifecycle = getLifecycle(thisRef)?.apply {
                 addObserver(object : LifecycleObserver {
                     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
                     fun onCreate() {

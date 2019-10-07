@@ -27,24 +27,22 @@ class LifecycleOwnerSharedPreferencesNullable<LO : SimplePrefLifecycleOwner, V :
 )
 
 private fun <LO : SimplePrefLifecycleOwner> getSharedPreferences(
-    viewModel: LO,
+    lifecycleOwner: LO,
     prefName: String,
     @Suppress("UNUSED_PARAMETER") isGlobalPref: Boolean
-): SharedPreferences? = viewModel.context?.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+): SharedPreferences? = lifecycleOwner.context?.getSharedPreferences(prefName, Context.MODE_PRIVATE)
 
-private fun <LO : SimplePrefLifecycleOwner> getLifecycle(viewModel: LO) = viewModel.lifecycle
+private fun <LO : SimplePrefLifecycleOwner> getLifecycle(lifecycleOwner: LO) = lifecycleOwner.lifecycle
 
 //region Extensions
 
 inline fun <LO : SimplePrefLifecycleOwner, reified V : Any> LO.simplePref(
     globalKey: String? = null,
     noinline defaultValue: () -> V
-) =
-    LifecycleOwnerSharedPreferencesNonNull<LO, V>(globalKey, V::class, defaultValue)
+) = LifecycleOwnerSharedPreferencesNonNull<LO, V>(globalKey, V::class, defaultValue)
 
 inline fun <LO : SimplePrefLifecycleOwner, reified V : Any> LO.simplePref(
     globalKey: String? = null
-) =
-    LifecycleOwnerSharedPreferencesNullable<LO, V>(globalKey, V::class)
+) = LifecycleOwnerSharedPreferencesNullable<LO, V>(globalKey, V::class)
 
 //endregion

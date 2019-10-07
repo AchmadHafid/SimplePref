@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 
 abstract class BaseSharedPreferencesNullable<T : Any, V: Any>(
     getSharedPreferences: (T, String, Boolean) -> SharedPreferences?,
-    getLifecycle: (T) -> Lifecycle,
+    getLifecycle: (T) -> Lifecycle?,
     globalKey: String? = null,
     clazz: KClass<V>
 ) : BaseSharedPreferences<T, V>(getSharedPreferences, getLifecycle, clazz, globalKey),

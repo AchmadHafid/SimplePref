@@ -11,19 +11,19 @@ Your quest for ultimate android shared preferences solution ends here!
 
 ![image](https://drive.google.com/uc?export=download&id=1hTpbapjA51gZrrfuhGFvDXwMQmJPSAcq)
 <br />
-[**Download Demo App Here**](https://github.com/AchmadHafid/SimplePref/releases/download/v2.1.1/SimplePref.v2.1.1.apk)
+[**Download Demo App Here**](https://github.com/AchmadHafid/SimplePref/releases/download/v2.2.0/SimplePref.v2.2.0.apk)
 
 
 Key Features
 --------
-* Flexible by design, no such thing like Preference Model that needs to be defined upfront!
-* Create local shared preferences in addition to regular global shared preferences!
-* Full support for Non-null & Nullable preferences
+* Flexible by design, no such thing like "Preference Model" that needs to be defined upfront!
+* Create local shared preferences (scope by Activity, Fragment, etc..) in addition to regular global shared preferences!
+* Full support for Non-null & Nullable preferences with single API!
 * Full support for non-native data types via converters
 * Observe preference as a live data!
 * Leak-proof (Demo app include LeakCanary to proof it), support lifecycle aware components out of the box.<br />
   (e.g. `FragmentActivity`, `Fragment`, `LifecycleService`)
-* Can be used inside `Application`, `AndroidViewModel` or other non-lifecycle aware component <br />
+* Optionally can be used inside `Application`, `AndroidViewModel` or other non-lifecycle aware component <br />
 
 
 Compatibility
@@ -52,7 +52,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:SimplePref:2.1.1"
+  implementation "com.github.AchmadHafid:SimplePref:2.2.0"
   ...
 }
 ```
@@ -66,23 +66,29 @@ Quick Usage
   <br />
 
 ```kotlin
-// NOTES: Below codes is only required if you use preference inside Application class
-// You can ignore it, if you do not use preference inside your Application class (e.g. only in Activity, Fragment etc)
 
-// 1. Make class implement SimplePrefLifecycleOwner with its delegate like below
-class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefLifecycleOwnerImpl() {
+// 1. Enable API by making App class extend SimplePrefLifecycleOwner with its delegate like below
+class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefApplication() {
 
     // 2. defined your shared preferences
     private var appTheme: Int? by simplePref("global_key_app_theme") // nullable global shared preference
 
     override fun onCreate() {
         super.onCreate()
+
         // 3. Attach context using below function
         attachSimplePrefContext(this)
+
         // 4. Use it like normal var/val
-        applyTheme(appTheme)
+        appTheme?.let { applyTheme(it) }
+
+        // 5.  Or create live data view extension function below
+        simplePrefLiveData(appTheme, ::appTheme) {
+            it?.let { applyTheme(it) }
+        }
     }
 }
+
 ```
 
 </details>
@@ -91,15 +97,17 @@ class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefLifecycleOwne
   <br />
 
 ```kotlin
-// 1. Make class implement SimplePref interface to access the API
+
+// 1. Enable API by making class extend SimplePref interface
 class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
 
     // 2. Defined your shared preferences
-    private var showNotification by simplePref { false }   // non-null local shared preference with default value
+    private var showNotification by simplePref { false }             // non-null local shared preference with default value
     private var appTheme: Int? by simplePref("global_key_app_theme") // nullable global shared preference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         // 3. Observe it as live data if you want
         simplePrefLiveData(appTheme, ::appTheme) { theme ->
           theme?.let { changeTheme(it) }
@@ -120,12 +128,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
   <br />
 
 ```kotlin
-// 1. Make class implement SimplePrefLifecycleOwner with its delegate like below
+
+// 1. Enable API by making view model class extend SimplePrefLifecycleOwner with its delegate like below
 class HomeViewModel(application: Application) : AndroidViewModel(application),
-    SimplePrefLifecycleOwner by SimplePrefLifecycleOwnerImpl(application) {
+    SimplePrefLifecycleOwner by SimplePrefViewModel(application) {
 
     // 2. Defined your shared preferences
-    private var showNotification by simplePref { false }   // non-null local shared preference with default value
+    private var showNotification by simplePref { false }             // non-null local shared preference with default value
     private val appTheme: Int? by simplePref("global_key_app_theme") // nullable global shared preference
 
     // 3. Expose it as LiveData like below
@@ -140,9 +149,10 @@ Non-native Data Types
 ---------------------
 
 In order to use a shared preference with non native data types (types other than `Boolean`, `String`, `Int`, `Long` & `Float`),
-you must do 2 things, provide converters before accessing any SimplePref API & call save API to persist the value.
+you must do 2 things, provide converters before accessing any SimplePref API & call save API to persist the value immediately after you do some operation on it.
 
 ```kotlin
+
 class MyApp : Application() {
 
     override fun onCreate() {
@@ -151,7 +161,7 @@ class MyApp : Application() {
         // Add converter for data type `MutableList<String>`
         simplePrefAddConverter<MutableList<String>> {
             onSerialize {
-                TextUtils.join("::", it)
+                it.joinToString("::")
             }
             onDeserialize {
                 if (it.isEmpty()) mutableListOf()
@@ -166,9 +176,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
   // now you can create a preference like below
   private val myList by simplePref { mutableListOf("default", "values") }
 
-  // now every time you do some update, call save API immediately
+  // and every time you do some update, call save API immediately
   fun updateList(newItem: String) {
     myList.add(newItem)
+    simplePrefSave(::myList)
+  }
+
+  // This one will not work
+  fun addTwoItems(item1: String, item2: String) {
+    myList.add(item1)
+    myList.add(item2)
+    simplePrefSave(::myList)
+  }
+
+  // This one will do just fine
+  fun addTwoItems(item1: String, item2: String) {
+    myList.add(item1)
+    simplePrefSave(::myList)
+    myList.add(item2)
     simplePrefSave(::myList)
   }
 

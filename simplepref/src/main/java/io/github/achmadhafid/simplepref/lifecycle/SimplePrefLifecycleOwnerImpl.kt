@@ -1,22 +1,21 @@
 package io.github.achmadhafid.simplepref.lifecycle
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 
-class SimplePrefLifecycleOwnerImpl(override var context: Application? = null): SimplePrefLifecycleOwner {
+class SimplePrefLifecycleOwnerImpl(override var context: Context? = null) :
+    SimplePrefLifecycleOwner {
 
     private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
 
     init {
-        context?.let {
-            onCreateSimplePref()
-        }
+        context?.let { onCreateSimplePref() }
     }
 
-    override fun attachSimplePrefContext(application: Application) {
-        if (context == null) {
-            context = application
+    override fun attachSimplePrefContext(context: Context) {
+        if (this.context == null) {
+            this.context = context
             onCreateSimplePref()
         }
     }
@@ -33,3 +32,6 @@ class SimplePrefLifecycleOwnerImpl(override var context: Application? = null): S
     }
 
 }
+
+typealias SimplePrefViewModel   = SimplePrefLifecycleOwnerImpl
+typealias SimplePrefApplication = SimplePrefLifecycleOwnerImpl

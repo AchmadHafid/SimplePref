@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 
 abstract class BaseSharedPreferencesNonNull<T : Any, V: Any>(
     getSharedPreferences: (T, String, Boolean) -> SharedPreferences?,
-    getLifecycle: (T) -> Lifecycle,
+    getLifecycle: (T) -> Lifecycle?,
     globalKey: String? = null,
     clazz: KClass<V>,
     private val defaultValue: () -> V
