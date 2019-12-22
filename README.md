@@ -52,7 +52,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:SimplePref:2.2.3"
+  implementation "com.github.AchmadHafid:SimplePref:2.3.0"
   ...
 }
 ```

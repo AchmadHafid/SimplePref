@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClear
-import io.github.achmadhafid.simplepref.core.simplePrefClearAllGlobal
 import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.core.simplePrefSave
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
