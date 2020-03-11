@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClear
@@ -12,7 +13,7 @@ import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.core.simplePrefSave
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
-import io.github.achmadhafid.zpack.delegate.fragmentView
+import io.github.achmadhafid.zpack.ktx.f
 import io.github.achmadhafid.zpack.ktx.onSingleClick
 import kotlin.random.Random
 
@@ -26,19 +27,25 @@ class ChildActivityFragment : Fragment(R.layout.fragment_child_activity), Simple
     //endregion
     //region View Binding
 
-    private var tvLocalVar: TextView? by fragmentView(R.id.tvLocalVar)
-    private var tvGlobalVar: TextView? by fragmentView(R.id.tvGlobalVar)
-    private var btnAdd: MaterialButton? by fragmentView(R.id.btnAdd)
-    private var btnClearLocal: MaterialButton? by fragmentView(R.id.btnClearLocal)
-    private var btnClearGlobal: MaterialButton? by fragmentView(R.id.btnClearGlobal)
+    private var tvLocalVar: TextView? = null
+    private var tvGlobalVar: TextView? = null
+    private var btnAdd: MaterialButton? = null
+    private var btnClearLocal: MaterialButton? = null
+    private var btnClearGlobal: MaterialButton? = null
 
     //endregion
 
     //region Lifecycle Callback
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        simplePrefLiveData(myInt, ::myInt) { updateUi() }
-        simplePrefLiveData(myList, ::myList) { updateUi() }
+        tvLocalVar = view.f(R.id.tvLocalVar)
+        tvGlobalVar = view.f(R.id.tvGlobalVar)
+        btnAdd = view.f(R.id.btnAdd)
+        btnClearLocal = view.f(R.id.btnClearLocal)
+        btnClearGlobal = view.f(R.id.btnClearGlobal)
+
+        simplePrefLiveData(myInt, ::myInt).observe(viewLifecycleOwner, Observer { updateUi() })
+        simplePrefLiveData(myList, ::myList).observe(viewLifecycleOwner, Observer { updateUi() })
 
         btnAdd?.onSingleClick(true) {
             @Suppress("MagicNumber")

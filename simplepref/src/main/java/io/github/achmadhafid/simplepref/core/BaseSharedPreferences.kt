@@ -48,6 +48,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
                 SimplePrefHolder.getKey(thisRef, property)
             lifecycle = getLifecycle(thisRef)?.apply {
                 addObserver(object : LifecycleObserver {
+                    @Suppress("unused")
                     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
                     fun onCreate() {
                         sharedPreferences?.registerOnSharedPreferenceChangeListener(
@@ -56,6 +57,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
                         onAttach(holderKey)
                     }
 
+                    @Suppress("unused")
                     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                     fun onDestroy() {
                         sharedPreferences?.unregisterOnSharedPreferenceChangeListener(

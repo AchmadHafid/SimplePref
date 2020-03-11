@@ -6,19 +6,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClear
 import io.github.achmadhafid.simplepref.core.simplePrefSave
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
-import io.github.achmadhafid.zpack.ktx.bindView
-import io.github.achmadhafid.zpack.ktx.onSingleClick
-import io.github.achmadhafid.zpack.ktx.setMaterialToolbar
-import io.github.achmadhafid.zpack.ktx.startActivity
-import io.github.achmadhafid.zpack.ktx.startService
-import io.github.achmadhafid.zpack.ktx.stopService
-import io.github.achmadhafid.zpack.ktx.toggleTheme
+import io.github.achmadhafid.zpack.ktx.*
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
@@ -27,7 +22,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
 
     private var appTheme: Int? by simplePref("app_theme")
     private var myInt: Int? by simplePref()
-    private var myList by globalPrefMyList()
+    private val myList by globalPrefMyList()
     private var isServiceRunning by globalPrefIsServiceRunning()
 
     //endregion
@@ -53,9 +48,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), SimplePref {
         btnOpenChild.onSingleClick(true) { startActivity<ChildActivity>() }
         btnOpenFragmentActivity.onSingleClick(true) { startActivity<ChildActivityWithFragment>() }
 
-        simplePrefLiveData(isServiceRunning, ::isServiceRunning) { updateUi() }
-        simplePrefLiveData(myInt, ::myInt) { updateUi() }
-        simplePrefLiveData(myList, ::myList) { updateUi() }
+        simplePrefLiveData(isServiceRunning, ::isServiceRunning)
+            .observe(this, Observer { updateUi() })
+        simplePrefLiveData(myInt, ::myInt)
+            .observe(this, Observer { updateUi() })
+        simplePrefLiveData(myList, ::myList)
+            .observe(this, Observer { updateUi() })
 
         btnAdd.onSingleClick(true) {
             @Suppress("MagicNumber")

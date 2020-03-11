@@ -3,6 +3,7 @@ package io.github.achmadhafid.sample_app
 import android.app.Service
 import android.content.Intent
 import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.Observer
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.zpack.ktx.toastShort
@@ -24,9 +25,9 @@ class LiveDataObserverService : LifecycleService(), SimplePref {
         if (!isRunning) {
             isRunning = true
 
-            simplePrefLiveData(myList, ::myList) {
+            simplePrefLiveData(myList, ::myList).observe(this, Observer {
                 toastShort("<From Service> myList size: ${it.size}")
-            }
+            })
         }
 
         return Service.START_STICKY
