@@ -7,7 +7,7 @@ import io.github.achmadhafid.simplepref.converter.simplePrefAddConverter
 import io.github.achmadhafid.simplepref.lifecycle.SimplePrefApplication
 import io.github.achmadhafid.simplepref.lifecycle.SimplePrefLifecycleOwner
 import io.github.achmadhafid.simplepref.simplePref
-import io.github.achmadhafid.zpack.ktx.applyTheme
+import io.github.achmadhafid.zpack.extension.applyTheme
 
 class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefApplication() {
 

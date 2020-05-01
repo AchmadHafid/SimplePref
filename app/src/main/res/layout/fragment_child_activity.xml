@@ -8,6 +8,8 @@
     tools:context=".ChildActivityFragment"
     tools:showIn="@layout/activity_child_with_fragment">
 
-    <include layout="@layout/content_child" />
+    <include
+        android:id="@+id/content"
+        layout="@layout/content_child" />
 
 </FrameLayout>

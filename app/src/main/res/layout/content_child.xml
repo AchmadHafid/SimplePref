@@ -26,7 +26,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvLocalVar"
+                    android:id="@+id/tv_Local_var"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -34,7 +34,7 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                 <TextView
-                    android:id="@+id/tvGlobalVar"
+                    android:id="@+id/tv_global_var"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -45,21 +45,21 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAdd"
+            android:id="@+id/btn_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Change Value"
             android:textAllCaps="false" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnClearLocal"
+            android:id="@+id/btn_clear_local"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Clear myInt (Local Pref)"
             android:textAllCaps="false" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnClearGlobal"
+            android:id="@+id/btn_clear_global"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Clear myList (Global Pref)"

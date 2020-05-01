@@ -25,9 +25,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:padding="64dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/content_child" />
+        <include
+            android:id="@+id/content"
+            layout="@layout/content_child" />
 
     </androidx.core.widget.NestedScrollView>
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.Observer
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
-import io.github.achmadhafid.zpack.ktx.toastShort
+import io.github.achmadhafid.zpack.extension.toastShort
 
 class LiveDataObserverService : LifecycleService(), SimplePref {
 
