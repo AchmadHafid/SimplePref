@@ -11,7 +11,7 @@ Your quest for ultimate android shared preferences solution ends here!
 
 ![image](https://drive.google.com/uc?export=download&id=1hTpbapjA51gZrrfuhGFvDXwMQmJPSAcq)
 <br />
-[**Download Demo App Here**](https://github.com/AchmadHafid/SimplePref/releases/download/v2.2.0/SimplePref.v2.2.0.apk)
+[**Download Demo App Here**](https://github.com/AchmadHafid/SimplePref/releases/download/v2.5.0/SimplePref.v2.5.0.apk)
 
 
 Key Features
@@ -52,7 +52,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:SimplePref:2.4.0"
+  implementation "com.github.AchmadHafid:SimplePref:2.5.0"
   ...
 }
 ```
