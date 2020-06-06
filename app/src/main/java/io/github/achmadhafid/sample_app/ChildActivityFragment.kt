@@ -14,7 +14,7 @@ import io.github.achmadhafid.simplepref.core.simplePrefClearAllLocal
 import io.github.achmadhafid.simplepref.core.simplePrefSave
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
-import io.github.achmadhafid.zpack.delegate.lifecycleValue
+import io.github.achmadhafid.zpack.delegate.lifecycleVar
 import io.github.achmadhafid.zpack.extension.view.onSingleClick
 import kotlin.random.Random
 
@@ -28,7 +28,7 @@ class ChildActivityFragment : Fragment(), SimplePref {
     //endregion
     //region View Binding
 
-    private var _binding by lifecycleValue<FragmentChildActivityBinding>()
+    private var _binding by lifecycleVar<FragmentChildActivityBinding>()
     private val binding get() = _binding!!
 
     //endregion
