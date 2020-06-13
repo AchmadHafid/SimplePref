@@ -1,5 +1,6 @@
 package io.github.achmadhafid.sample_app
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,6 +32,7 @@ class ChildActivity : AppCompatActivity(), SimplePref {
     //endregion
     //region Lifecycle Callback
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

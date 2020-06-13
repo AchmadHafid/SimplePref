@@ -27,6 +27,7 @@ class ChildActivityViewModel(application: Application) : AndroidViewModel(applic
         simplePrefLiveData(myList, ::myList)
 
     fun changeValue() {
+        @Suppress("MagicNumber")
         myInt = Random.nextInt(1, 100)
         myList.add("$myInt")
         simplePrefSave(::myList)
