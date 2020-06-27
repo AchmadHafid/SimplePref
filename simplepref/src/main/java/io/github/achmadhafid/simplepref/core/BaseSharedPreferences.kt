@@ -84,7 +84,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
     protected fun <V : Any> retrieveNonNull(defaultValue: V): V =
         retrieveNullable(defaultValue) as V
 
-    @Suppress("ComplexMethod", "UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     protected fun <V : Any> retrieveNullable(
         thisRef: T,
         property: KProperty<*>,
@@ -154,7 +154,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
         save(value)
     }
 
-    @Suppress("ComplexMethod", "UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     protected fun <V : Any> save(value: V?) {
         value?.let {
             when (it) {

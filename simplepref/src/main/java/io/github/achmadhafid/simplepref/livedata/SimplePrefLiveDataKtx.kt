@@ -1,5 +1,3 @@
-@file:Suppress("TooManyFunctions")
-
 package io.github.achmadhafid.simplepref.livedata
 
 import io.github.achmadhafid.simplepref.SimplePref
