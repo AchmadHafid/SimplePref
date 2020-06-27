@@ -26,13 +26,13 @@ class ActivitySharedPreferencesNullable<A : FragmentActivity, V: Any>(
     globalKey, clazz
 )
 
-private fun <A : FragmentActivity> getSharedPreferences(activity: A,
+private fun <A : FragmentActivity> getSharedPreferences(
+    activity: A,
     prefName: String,
     isGlobalPref: Boolean
-): SharedPreferences? = if (isGlobalPref)
-    activity.getSharedPreferences(prefName, Context.MODE_PRIVATE)
-else
-    activity.getPreferences(Context.MODE_PRIVATE)
+): SharedPreferences? =
+    if (isGlobalPref) activity.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+    else activity.getPreferences(Context.MODE_PRIVATE)
 
 private fun <A : FragmentActivity> getLifecycle(activity: A) = activity.lifecycle
 
