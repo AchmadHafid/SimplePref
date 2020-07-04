@@ -1,8 +1,8 @@
 ext.versions = [
         //region Release
 
-        code             : 14,
-        name             : "2.7.0",
+        code             : 15,
+        name             : "2.7.1",
 
         //endregion
         //region SDK
@@ -35,7 +35,7 @@ ext.versions = [
         //endregion
         //region Extra Dependencies
 
-        zpack             : '1.1.0',
+        zpack             : '1.1.1',
         leak_canary       : '2.4',
 
         //endregion
