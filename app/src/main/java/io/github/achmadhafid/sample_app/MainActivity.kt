@@ -16,7 +16,6 @@ import io.github.achmadhafid.zpack.extension.intent
 import io.github.achmadhafid.zpack.extension.startService
 import io.github.achmadhafid.zpack.extension.stopService
 import io.github.achmadhafid.zpack.extension.toggleTheme
-import io.github.achmadhafid.zpack.extension.view.onSingleClick
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(), SimplePref {
@@ -43,10 +42,10 @@ class MainActivity : AppCompatActivity(), SimplePref {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        binding.btnOpenChildActivity.onSingleClick(true) {
+        binding.btnOpenChildActivity.setOnClickListener {
             startActivity(intent<ChildActivity>())
         }
-        binding.btnOpenFragmentActivity.onSingleClick(true) {
+        binding.btnOpenFragmentActivity.setOnClickListener {
             startActivity(intent<ChildActivityWithFragment>())
         }
 
@@ -57,16 +56,16 @@ class MainActivity : AppCompatActivity(), SimplePref {
         simplePrefLiveData(myList, ::myList)
             .observe(this, Observer { updateUi() })
 
-        binding.content.btnAdd.onSingleClick(true) {
+        binding.content.btnAdd.setOnClickListener {
             @Suppress("MagicNumber")
             myInt = Random.nextInt(1, 100)
             myList.add("$myInt")
             simplePrefSave(::myList)
         }
-        binding.content.btnClearLocal.onSingleClick(true) {
+        binding.content.btnClearLocal.setOnClickListener {
             simplePrefClear(::myInt)
         }
-        binding.content.btnClearGlobal.onSingleClick(true) {
+        binding.content.btnClearGlobal.setOnClickListener {
             simplePrefClear(::myList)
         }
     }
@@ -96,7 +95,7 @@ class MainActivity : AppCompatActivity(), SimplePref {
         binding.btnToggleService.text =
             if (isServiceRunning) "Stop Observer Service"
             else "Start Observer Service"
-        binding.btnToggleService.onSingleClick {
+        binding.btnToggleService.setOnClickListener {
             if (isServiceRunning) stopService<LiveDataObserverService>()
             else startService<LiveDataObserverService>()
         }

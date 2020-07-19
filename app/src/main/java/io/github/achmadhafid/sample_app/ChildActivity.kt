@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import io.github.achmadhafid.sample_app.databinding.ActivityChildBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.zpack.extension.getViewModel
-import io.github.achmadhafid.zpack.extension.view.onSingleClick
 
 class ChildActivity : AppCompatActivity(), SimplePref {
 
@@ -49,13 +48,13 @@ class ChildActivity : AppCompatActivity(), SimplePref {
                 binding.content.tvGlobalVar.text = "myList Size (Global pref): ${it.size}"
             })
 
-        binding.content.btnAdd.onSingleClick(true) {
+        binding.content.btnAdd.setOnClickListener {
             viewModel.changeValue()
         }
-        binding.content.btnClearLocal.onSingleClick(true) {
+        binding.content.btnClearLocal.setOnClickListener {
             viewModel.clearAllLocal()
         }
-        binding.content.btnClearGlobal.onSingleClick(true) {
+        binding.content.btnClearGlobal.setOnClickListener {
             viewModel.clearMyList()
         }
     }

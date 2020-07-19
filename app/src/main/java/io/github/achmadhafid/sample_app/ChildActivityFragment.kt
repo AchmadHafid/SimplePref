@@ -15,7 +15,6 @@ import io.github.achmadhafid.simplepref.core.simplePrefSave
 import io.github.achmadhafid.simplepref.livedata.simplePrefLiveData
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.delegate.lifecycleVar
-import io.github.achmadhafid.zpack.extension.view.onSingleClick
 import kotlin.random.Random
 
 class ChildActivityFragment : Fragment(), SimplePref {
@@ -47,16 +46,16 @@ class ChildActivityFragment : Fragment(), SimplePref {
         simplePrefLiveData(myInt, ::myInt).observe(viewLifecycleOwner, Observer { updateUi() })
         simplePrefLiveData(myList, ::myList).observe(viewLifecycleOwner, Observer { updateUi() })
 
-        binding.content.btnAdd.onSingleClick(true) {
+        binding.content.btnAdd.setOnClickListener {
             @Suppress("MagicNumber")
             myInt = Random.nextInt(1, 100)
             myList.add("$myInt")
             simplePrefSave(::myList)
         }
-        binding.content.btnClearLocal.onSingleClick(true) {
+        binding.content.btnClearLocal.setOnClickListener {
             simplePrefClearAllLocal()
         }
-        binding.content.btnClearGlobal.onSingleClick(true) {
+        binding.content.btnClearGlobal.setOnClickListener {
             simplePrefClear(::myList)
         }
     }
