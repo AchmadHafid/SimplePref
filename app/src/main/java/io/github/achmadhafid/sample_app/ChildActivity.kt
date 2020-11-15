@@ -3,7 +3,6 @@ package io.github.achmadhafid.sample_app
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import io.github.achmadhafid.sample_app.databinding.ActivityChildBinding
 import io.github.achmadhafid.simplepref.SimplePref
@@ -39,12 +38,12 @@ class ChildActivity : AppCompatActivity(), SimplePref {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel.getMyInt()
-            .observe(this, Observer {
+            .observe(this, {
                 binding.content.tvLocalVar.text  = "myInt (Local pref) : $it"
             })
 
         viewModel.getMyList()
-            .observe(this, Observer {
+            .observe(this, {
                 binding.content.tvGlobalVar.text = "myList Size (Global pref): ${it.size}"
             })
 

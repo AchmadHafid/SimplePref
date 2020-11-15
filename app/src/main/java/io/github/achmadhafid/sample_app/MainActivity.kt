@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import io.github.achmadhafid.sample_app.databinding.ActivityMainBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClear
@@ -50,11 +49,11 @@ class MainActivity : AppCompatActivity(), SimplePref {
         }
 
         simplePrefLiveData(isServiceRunning, ::isServiceRunning)
-            .observe(this, Observer { updateUi() })
+            .observe(this, { updateUi() })
         simplePrefLiveData(myInt, ::myInt)
-            .observe(this, Observer { updateUi() })
+            .observe(this, { updateUi() })
         simplePrefLiveData(myList, ::myList)
-            .observe(this, Observer { updateUi() })
+            .observe(this, { updateUi() })
 
         binding.content.btnAdd.setOnClickListener {
             @Suppress("MagicNumber")

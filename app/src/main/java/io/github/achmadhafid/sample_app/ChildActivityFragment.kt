@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import io.github.achmadhafid.sample_app.databinding.FragmentChildActivityBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.simplepref.core.simplePrefClear
@@ -43,8 +42,8 @@ class ChildActivityFragment : Fragment(), SimplePref {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        simplePrefLiveData(myInt, ::myInt).observe(viewLifecycleOwner, Observer { updateUi() })
-        simplePrefLiveData(myList, ::myList).observe(viewLifecycleOwner, Observer { updateUi() })
+        simplePrefLiveData(myInt, ::myInt).observe(viewLifecycleOwner, { updateUi() })
+        simplePrefLiveData(myList, ::myList).observe(viewLifecycleOwner, { updateUi() })
 
         binding.content.btnAdd.setOnClickListener {
             @Suppress("MagicNumber")
