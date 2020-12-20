@@ -3,7 +3,6 @@ package io.github.achmadhafid.sample_app
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import io.github.achmadhafid.sample_app.databinding.ActivityChildBinding
 import io.github.achmadhafid.simplepref.SimplePref
 import io.github.achmadhafid.zpack.extension.getViewModel
@@ -20,8 +19,9 @@ class ChildActivity : AppCompatActivity(), SimplePref {
     //region View Model
 
     private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)
-            .getViewModel<ChildActivityViewModel>()
+        getViewModel<ChildActivityViewModel>(viewModelFactory)
+//        ViewModelProvider(this, viewModelFactory)
+//            .getViewModel<ChildActivityViewModel>()
     }
     private val viewModelFactory by lazy {
         ChildActivityViewModelFactory(application)

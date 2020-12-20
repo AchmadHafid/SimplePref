@@ -9,6 +9,7 @@ import io.github.achmadhafid.simplepref.lifecycle.SimplePrefLifecycleOwner
 import io.github.achmadhafid.simplepref.simplePref
 import io.github.achmadhafid.zpack.extension.applyTheme
 
+@Suppress("Unused")
 class MyApp : Application(), SimplePrefLifecycleOwner by SimplePrefApplication() {
 
     private var appTheme: Int? by simplePref("app_theme")

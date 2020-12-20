@@ -24,9 +24,9 @@ class LiveDataObserverService : LifecycleService(), SimplePref {
         if (!isRunning) {
             isRunning = true
 
-            simplePrefLiveData(myList, ::myList).observe(this, {
+            simplePrefLiveData(myList, ::myList).observe(this) {
                 toastShort("<From Service> myList size: ${it.size}")
-            })
+            }
         }
 
         return Service.START_STICKY

@@ -49,11 +49,11 @@ class MainActivity : AppCompatActivity(), SimplePref {
         }
 
         simplePrefLiveData(isServiceRunning, ::isServiceRunning)
-            .observe(this, { updateUi() })
+            .observe(this) { updateUi() }
         simplePrefLiveData(myInt, ::myInt)
-            .observe(this, { updateUi() })
+            .observe(this) { updateUi() }
         simplePrefLiveData(myList, ::myList)
-            .observe(this, { updateUi() })
+            .observe(this) { updateUi() }
 
         binding.content.btnAdd.setOnClickListener {
             @Suppress("MagicNumber")

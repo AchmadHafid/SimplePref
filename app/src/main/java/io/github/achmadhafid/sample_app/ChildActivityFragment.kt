@@ -36,14 +36,14 @@ class ChildActivityFragment : Fragment(), SimplePref {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentChildActivityBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        simplePrefLiveData(myInt, ::myInt).observe(viewLifecycleOwner, { updateUi() })
-        simplePrefLiveData(myList, ::myList).observe(viewLifecycleOwner, { updateUi() })
+        simplePrefLiveData(myInt, ::myInt).observe(viewLifecycleOwner) { updateUi() }
+        simplePrefLiveData(myList, ::myList).observe(viewLifecycleOwner) { updateUi() }
 
         binding.content.btnAdd.setOnClickListener {
             @Suppress("MagicNumber")
