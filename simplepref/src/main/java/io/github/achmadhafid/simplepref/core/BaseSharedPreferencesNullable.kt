@@ -6,7 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
-abstract class BaseSharedPreferencesNullable<T : Any, V: Any>(
+abstract class BaseSharedPreferencesNullable<T : Any, V : Any>(
     getSharedPreferences: (T, String, Boolean) -> SharedPreferences?,
     getLifecycle: (T) -> Lifecycle?,
     globalKey: String? = null,
@@ -30,12 +30,12 @@ abstract class BaseSharedPreferencesNullable<T : Any, V: Any>(
     }
 
     fun getValue(): V? {
-        backingField = retrieveNullable(null)
+        backingField = retrieveNullable<V>(null)
         return backingField
     }
 
     override fun getValue(thisRef: T, property: KProperty<*>): V? {
-        backingField = retrieveNullable(thisRef, property, null)
+        backingField = retrieveNullable<V>(thisRef, property, null)
         return backingField
     }
 
