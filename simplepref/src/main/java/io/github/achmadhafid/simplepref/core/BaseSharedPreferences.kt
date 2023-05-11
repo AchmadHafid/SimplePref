@@ -4,16 +4,16 @@ package io.github.achmadhafid.simplepref.core
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.LifecycleOwner
 import io.github.achmadhafid.simplepref.converter.SimplePrefConverterHolder
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
 private const val SHARED_PREFERENCES_NAME = "simple_pref"
 
-abstract class BaseSharedPreferences<T : Any, V: Any>(
+abstract class BaseSharedPreferences<T : Any, V : Any>(
     private val getSharedPreferences: (T, String, Boolean) -> SharedPreferences?,
     private val getLifecycle: (T) -> Lifecycle?,
     private val clazz: KClass<V>,
@@ -37,8 +37,8 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
         key = globalKey ?: property.name
         if (sharedPreferences == null) {
             val prefName = SHARED_PREFERENCES_NAME +
-                    if (globalKey != null) ""
-                    else thisRef.javaClass.simpleName
+                if (globalKey != null) ""
+                else thisRef.javaClass.simpleName
             sharedPreferences = getSharedPreferences(
                 thisRef, prefName, globalKey != null
             )
@@ -47,19 +47,15 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
             val holderKey =
                 SimplePrefHolder.getKey(thisRef, property)
             lifecycle = getLifecycle(thisRef)?.apply {
-                addObserver(object : LifecycleObserver {
-                    @Suppress("unused")
-                    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-                    fun onCreate() {
+                addObserver(object : DefaultLifecycleObserver {
+                    override fun onCreate(owner: LifecycleOwner) {
                         sharedPreferences?.registerOnSharedPreferenceChangeListener(
                             sharedPreferencesObserver
                         )
                         onAttach(holderKey)
                     }
 
-                    @Suppress("unused")
-                    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-                    fun onDestroy() {
+                    override fun onDestroy(owner: LifecycleOwner) {
                         sharedPreferences?.unregisterOnSharedPreferenceChangeListener(
                             sharedPreferencesObserver
                         )
@@ -73,18 +69,15 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <V : Any> retrieveNonNull(
         thisRef: T,
         property: KProperty<*>,
         defaultValue: V
     ): V = retrieveNullable(thisRef, property, defaultValue) as V
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <V : Any> retrieveNonNull(defaultValue: V): V =
         retrieveNullable(defaultValue) as V
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <V : Any> retrieveNullable(
         thisRef: T,
         property: KProperty<*>,
@@ -107,6 +100,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
                         defaultValue
                     }
                 }
+
                 Int::class -> {
                     if (isExist(key)) {
                         read { getInt(key, 0) } as V?
@@ -114,6 +108,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
                         defaultValue
                     }
                 }
+
                 Long::class -> {
                     if (isExist(key)) {
                         read { getLong(key, 0L) } as V?
@@ -121,6 +116,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
                         defaultValue
                     }
                 }
+
                 Float::class -> {
                     if (isExist(key)) {
                         read { getFloat(key, 0F) } as V?
@@ -128,6 +124,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
                         defaultValue
                     }
                 }
+
                 String::class -> {
                     if (isExist(key)) {
                         read { getString(key, "") } as V?
@@ -135,6 +132,7 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
                         defaultValue
                     }
                 }
+
                 else -> if (isExist(key)) {
                     read {
                         SimplePrefConverterHolder.deserialize(
@@ -154,7 +152,6 @@ abstract class BaseSharedPreferences<T : Any, V: Any>(
         save(value)
     }
 
-    @Suppress("UNCHECKED_CAST")
     protected fun <V : Any> save(value: V?) {
         value?.let {
             when (it) {

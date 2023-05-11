@@ -6,7 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
-abstract class BaseSharedPreferencesNonNull<T : Any, V: Any>(
+abstract class BaseSharedPreferencesNonNull<T : Any, V : Any>(
     getSharedPreferences: (T, String, Boolean) -> SharedPreferences?,
     getLifecycle: (T) -> Lifecycle?,
     globalKey: String? = null,
@@ -54,7 +54,7 @@ abstract class BaseSharedPreferencesNonNull<T : Any, V: Any>(
 
     fun clear() {
         backingField = null
-        save(backingField)
+        save(null)
     }
 
     //region Observer Helper

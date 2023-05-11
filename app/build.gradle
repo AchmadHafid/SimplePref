@@ -22,6 +22,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    namespace 'io.github.achmadhafid.sample_app'
 }
 
 dependencies {

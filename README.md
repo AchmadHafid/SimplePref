@@ -29,7 +29,7 @@ Key Features
 Compatibility
 -------------
 
-This library is compatible from API 21 (Android 5.0 Lollipop) & AndroidX.
+This library is compatible from API 26 & AndroidX.
 
 
 Download
@@ -52,7 +52,7 @@ Add the dependency
 ```groovy
 dependencies {
   ...
-  implementation "com.github.AchmadHafid:SimplePref:2.9.0"
+  implementation "com.github.AchmadHafid:SimplePref:2.10.0"
   ...
 }
 ```

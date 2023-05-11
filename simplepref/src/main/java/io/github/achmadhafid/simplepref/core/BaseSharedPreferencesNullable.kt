@@ -50,7 +50,7 @@ abstract class BaseSharedPreferencesNullable<T : Any, V : Any>(
 
     fun clear() {
         backingField = null
-        save(backingField)
+        save(null)
     }
 
     //region Observer Helper

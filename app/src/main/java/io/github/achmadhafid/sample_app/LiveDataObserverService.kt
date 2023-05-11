@@ -1,6 +1,5 @@
 package io.github.achmadhafid.sample_app
 
-import android.app.Service
 import android.content.Intent
 import androidx.lifecycle.LifecycleService
 import io.github.achmadhafid.simplepref.SimplePref
@@ -29,7 +28,7 @@ class LiveDataObserverService : LifecycleService(), SimplePref {
             }
         }
 
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     override fun onDestroy() {

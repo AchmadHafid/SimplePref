@@ -20,8 +20,6 @@ class ChildActivity : AppCompatActivity(), SimplePref {
 
     private val viewModel by lazy {
         getViewModel<ChildActivityViewModel>(viewModelFactory)
-//        ViewModelProvider(this, viewModelFactory)
-//            .getViewModel<ChildActivityViewModel>()
     }
     private val viewModelFactory by lazy {
         ChildActivityViewModelFactory(application)
@@ -38,14 +36,14 @@ class ChildActivity : AppCompatActivity(), SimplePref {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel.getMyInt()
-            .observe(this, {
-                binding.content.tvLocalVar.text  = "myInt (Local pref) : $it"
-            })
+            .observe(this) {
+                binding.content.tvLocalVar.text = "myInt (Local pref) : $it"
+            }
 
         viewModel.getMyList()
-            .observe(this, {
+            .observe(this) {
                 binding.content.tvGlobalVar.text = "myList Size (Global pref): ${it.size}"
-            })
+            }
 
         binding.content.btnAdd.setOnClickListener {
             viewModel.changeValue()

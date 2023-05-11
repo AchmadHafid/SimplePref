@@ -9,9 +9,8 @@ class SimplePrefLifecycleOwnerImpl(override var context: Context? = null) :
 
     private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
 
-    init {
-        context?.let { onCreateSimplePref() }
-    }
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
 
     override fun attachSimplePrefContext(context: Context) {
         if (this.context == null) {
@@ -20,8 +19,6 @@ class SimplePrefLifecycleOwnerImpl(override var context: Context? = null) :
         }
     }
 
-    override fun getLifecycle() = lifecycleRegistry
-
     override fun onCreateSimplePref() {
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
     }
@@ -29,6 +26,10 @@ class SimplePrefLifecycleOwnerImpl(override var context: Context? = null) :
     override fun onDestroySimplePref() {
         context = null
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    }
+
+    init {
+        context?.let { onCreateSimplePref() }
     }
 
 }
